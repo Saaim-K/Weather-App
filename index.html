@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="logo.png" type="image/ico" />
+    <title>Weather</title>
+</head>
+
+<body class="light-theme">
+    <section id="nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="forecast.html">Forecast</a></li>
+            <li><a href="#" class="theme">Dark Mode</a></li>
+        </ul>
+    </section>
+    <section id="main">
+        <nav>
+            <i class="fas fa-bars toggler"></i>
+            <h2>Dark Sky <i class="fas fa-cloud-meatball"></i></h2>
+            <h3 id="time"></h3>
+        </nav>
+        <div id="popup">
+            <div class="popup-flex">
+                <button id="popup-btn">Click Me</button>
+            </div>
+
+            <div id="popup-wrapper" class="popup-container">
+                <div class="popup-content">
+                    <span id="close">&times;</span>
+                    <p id="err">Please enable the GPS.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <main>
+            <form class="input">
+                <input type="text" class="inputValue" placeholder="Enter a city" onkeypress="return runScript(event)" />
+                <button class="button">Search</button>
+            </form>
+            <div class=" spin">
+                <div class="loader">Loading...</div>
+                <p class="ml10">
+                    <span class="text-wrapper">
+                        <span class="letters">Gathering info...</span>
+                    </span>
+                </p>
+            </div>
+            <div class="temp">
+                <div class="label">
+                    <sup id="marker"><i class="fas fa-map-marker-alt"></i></sup>
+                    <h1 id="name"></h1>
+                    <sub id="country"></sub>
+                </div>
+
+                <h1 id="temp"></h1>
+                <div class="min-max">
+                    <span id="max"></span>
+                    <span id="slash">/</span>
+                    <span id="min"></span>
+                    <span style="padding: 0 10px"></span>
+                    <span id="day"></span>
+                </div>
+                <span id="description"><i class="fas fa-cloud"></i> <span id="desc"></span></span>
+            </div>
+        </main>
+
+
+        <div class="more">
+            <div class="row container">
+                <div class="col-6 col-md-3 col-sm-3">
+                    <h2><span id="feel"></span> <sub>°C</sub></h2>
+                    <p>Real feel</p>
+                </div>
+                <div class="col-6 col-md-3 col-sm-3">
+                    <h2><span id="wind"></span> <sub>km/h</sub></h2>
+                    <p><span id="direction"></span> wind</p>
+                </div>
+                <div class="col-6 col-md-3 col-sm-3">
+                    <h2><span id="humid"></span> <sub>%</sub></h2>
+                    <p>Humidity</p>
+                </div>
+                <div class="col-6 col-md-3 col-sm-3">
+                    <h2><span id="pressure"></span> <sub>hPa</sub></h2>
+                    <p>Pressure</p>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </section>
+    <script type="text/javascript">
+        var popup = document.getElementById('popup-wrapper');
+        var btn = document.getElementById("popup-btn");
+        var span = document.getElementById("close");
+        btn.onclick = function () {
+            popup.classList.add('show');
+        }
+        span.onclick = function () {
+            popup.classList.remove('show');
+        }
+
+        window.onclick = function (event) {
+            if (event.target == popup) {
+                popup.classList.remove('show');
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script>
+        var textWrapper = document.querySelector('.ml10 .letters');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.ml10 .letter',
+                rotateY: [-90, 0],
+                duration: 2000,
+                delay: (el, i) => 45 * i
+            }).add({
+                targets: '.ml10',
+                opacity: 0,
+                duration: 500,
+                easing: "easeOutExpo",
+                delay: 500
+            });
+    </script>
+</body>
+
+</html>
